@@ -19,3 +19,4 @@ The Digistump website recommended using Arduino IDE 1.6.5. I think this is just 
  - Only connect the board after you have pressed upload in the Arduino IDE and it is awaiting your board to be connected in the console.
  - I don't think anything showed up in `/dev` while I was using it in Linux but I did see `Digispark Bootloader` in `Windows Device Manager`.
  - The program is not aware of the keyboard layout.
+ - You may have issues if your USB port is loose.
