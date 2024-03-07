@@ -8,6 +8,7 @@ The Digistump website recommended using Arduino IDE 1.6.5. I think this is just 
  - Install Arduino IDE.
  - Add the Board Manager URL to Arduino IDE preferences: https://raw.githubusercontent.com/digistump/arduino-boards-index/master/package_digistump_index.json
  - Install the Digistump AVR Boards from Boards Manager.
+ - Install drivers on Windows if the wizard doesn't show up. Linux may be using the CONFIG_CDC_ACM driver which should be enabled by default (add yourself to the dialout group).
  - Select Digispark default 16.5 Mhz (in Tools > Board).
  - Add the TrinketHidComboAbsoluteMouse folder to a ZIP file.
  - Add .ZIP Library... in the IDE (Sketch > Include Library) and select your created ZIP.
