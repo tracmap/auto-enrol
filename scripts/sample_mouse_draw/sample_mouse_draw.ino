@@ -4,7 +4,7 @@
 #include <usbconfig.h>
 
 // Jacek Fedorynski <jfedor@jfedor.org>
-// http://www.jfedor.org/molacbymolacby
+// http://www.jfedor.org/
 
 const PROGMEM uint16_t trollface[] = {
   124, 1076, 224, 901, 224, 901, 378, 762, 378, 762, 669, 287, 669, 287, 833, 163, 833, 163, 938,
