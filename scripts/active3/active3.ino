@@ -8,7 +8,7 @@ char knox_user[] = "";
 char knox_pwd[] = "";
 
 long t_last_ctrl = 0;
-long t_ctrl_gap_ms = 1000;
+long t_ctrl_gap_ms = 10000;
 
 void keystroke(uint8_t modifiers, uint8_t keycode) {
   TrinketHidCombo.pressKey(modifiers, keycode);
@@ -41,8 +41,10 @@ void my_delay(long msec) {
   t_last_ctrl = t0;
   while (millis() < t0 + msec) {
     if (millis() > (t_last_ctrl + t_ctrl_gap_ms)) {
+      digitalWrite(1, HIGH);
       keystroke(KEYCODE_MOD_LEFT_CONTROL, 0);
       t_last_ctrl = millis();
+      digitalWrite(1, LOW);
     }
     TrinketHidCombo.poll();
   }
@@ -57,6 +59,7 @@ void loop() {
 }
 
 void setup() {
+  pinMode(1, OUTPUT); // LED
   TrinketHidCombo.begin();
   my_delay(1000);
 
@@ -92,7 +95,7 @@ void setup() {
   text(knox_pwd);
   keystroke(0, KEYCODE_ENTER);
 
-  my_delay(120000); // may be up to 7 mins?
+  my_delay(120000); // usually 2 mins is fine but may be up to 7
   // home screen - install app
   keystroke(0, KEYCODE_TAB);
   keystroke(0, KEYCODE_SPACE);
@@ -122,5 +125,6 @@ void setup() {
   keystroke(0, KEYCODE_ESC);
 
   // finished, enter device ID
+  digitalWrite(1, HIGH);
 }
 

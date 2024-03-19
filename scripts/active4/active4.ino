@@ -8,7 +8,7 @@ char knox_user[] = "";
 char knox_pwd[] = "";
 
 long t_last_ctrl = 0;
-long t_ctrl_gap_ms = 1000;
+long t_ctrl_gap_ms = 10000;
 
 void keystroke(uint8_t modifiers, uint8_t keycode) {
   TrinketHidCombo.pressKey(modifiers, keycode);
@@ -41,8 +41,10 @@ void my_delay(long msec) {
   t_last_ctrl = t0;
   while (millis() < t0 + msec) {
     if (millis() > (t_last_ctrl + t_ctrl_gap_ms)) {
+      digitalWrite(1, HIGH);
       keystroke(KEYCODE_MOD_LEFT_CONTROL, 0);
       t_last_ctrl = millis();
+      digitalWrite(1, LOW);
     }
     TrinketHidCombo.poll();
   }
@@ -57,6 +59,7 @@ void loop() {
 }
 
 void setup() {
+  pinMode(1, OUTPUT); // LED
   TrinketHidCombo.begin();
   my_delay(1000);
 
@@ -81,17 +84,23 @@ void setup() {
 
   my_delay(15000);
   // google services page - new in Android 14?
+  // may only be 4 tabs in landscape mode so must be kept portrait
   repeat(5, 0, KEYCODE_TAB);
   keystroke(0, KEYCODE_SPACE);
   my_delay(500);
   repeat(3, 0, KEYCODE_TAB);
   keystroke(0, KEYCODE_SPACE);
   my_delay(500);
-  repeat(4, 0, KEYCODE_TAB);
+  // first 2 tabs cause a scroll so pause a bit more
+  keystroke(0, KEYCODE_TAB);
+  my_delay(500);
+  keystroke(0, KEYCODE_TAB);
+  my_delay(500);
+  repeat(2, 0, KEYCODE_TAB);
   my_delay(500);
   keystroke(0, KEYCODE_SPACE);
 
-  my_delay(15000);
+  my_delay(25000);
   // knox login page
   keystroke(0, KEYCODE_TAB);
   my_delay(500);
@@ -104,8 +113,12 @@ void setup() {
   text(knox_pwd);
   keystroke(0, KEYCODE_ENTER);
 
-  my_delay(120000); // may be up to 7 mins?
-  // home screen - install app
+  my_delay(120000); // usually 2 mins is fine but may be up to 7
+  // home screen
+  // android 14: kiosk says this app was built for an earlier version of android
+  keystroke(0, KEYCODE_SPACE);
+  my_delay(1000);
+  // install app
   keystroke(0, KEYCODE_TAB);
   keystroke(0, KEYCODE_SPACE);
   my_delay(1000);
@@ -134,5 +147,6 @@ void setup() {
   keystroke(KEYCODE_MOD_LEFT_GUI, KEYCODE_ARROW_LEFT);
 
   // finished, enter device ID
+  digitalWrite(1, HIGH);
 }
 
