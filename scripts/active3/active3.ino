@@ -8,7 +8,7 @@ char knox_user[] = "";
 char knox_pwd[] = "";
 
 long t_last_ctrl = 0;
-long t_ctrl_gap_ms = 10000;
+long t_ctrl_gap_ms = 5000;
 
 void keystroke(uint8_t modifiers, uint8_t keycode) {
   TrinketHidCombo.pressKey(modifiers, keycode);
@@ -99,7 +99,7 @@ void setup() {
   // home screen - install app
   keystroke(0, KEYCODE_TAB);
   keystroke(0, KEYCODE_SPACE);
-  my_delay(1000);
+  my_delay(2000);
   keystroke(0, KEYCODE_TAB);
   keystroke(0, KEYCODE_SPACE);
 
